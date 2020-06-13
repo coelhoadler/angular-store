@@ -3,7 +3,9 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { initialErrorState } from './reducers/error.reducer';
+
 import { notFound, reset, internalError } from './actions/error.actions'
+import { loginAction } from './actions/login-page.actions'
 
 @Component({
   selector: 'lib-sandler-lib',
@@ -28,23 +30,34 @@ import { notFound, reset, internalError } from './actions/error.actions'
 
         Current Error State: {{ code }}
       </div>
+
+      <br/><br/><br/>
+
+      <button (click)="doLogin()">Do login</button>
   `,
 })
 export class SandlerLibComponent implements OnInit {
 
   public error$: Observable<number>;
+  public login$: Observable<any>;
+
   public currentCode = initialErrorState;
 
   constructor(
-    private store: Store<{error: number}>
+    private store: Store<any>
   ) { 
     this.error$ = store.pipe(select('error'));
+    this.login$ = store.pipe(select('login'));
   }
 
   ngOnInit(): void { 
     this.error$.subscribe(state => {
       this.currentCode = state;
     });
+
+    this.login$.subscribe(state => {
+      console.log('login data', state);
+    })
   }
 
   public setErrorNotFound(): void {
@@ -57,6 +70,10 @@ export class SandlerLibComponent implements OnInit {
 
   public resetError(): void {
     this.store.dispatch(reset());
+  }
+
+  public doLogin(): void {
+    this.store.dispatch(loginAction({username: 'adlercoelhosantos', password: 'Test123'}));
   }  
 
 }
