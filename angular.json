@@ -1,0 +1,171 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "sandler-lib": {
+      "projectType": "library",
+      "root": "projects/sandler-lib",
+      "sourceRoot": "projects/sandler-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/sandler-lib/tsconfig.lib.json",
+            "project": "projects/sandler-lib/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/sandler-lib/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/sandler-lib/src/test.ts",
+            "tsConfig": "projects/sandler-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/sandler-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/sandler-lib/tsconfig.lib.json",
+              "projects/sandler-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "sandler-app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/sandler-app",
+      "sourceRoot": "projects/sandler-app/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/sandler-app",
+            "index": "projects/sandler-app/src/index.html",
+            "main": "projects/sandler-app/src/main.ts",
+            "polyfills": "projects/sandler-app/src/polyfills.ts",
+            "tsConfig": "projects/sandler-app/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/sandler-app/src/favicon.ico",
+              "projects/sandler-app/src/assets"
+            ],
+            "styles": [
+              "projects/sandler-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/sandler-app/src/environments/environment.ts",
+                  "with": "projects/sandler-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "sandler-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "sandler-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "sandler-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/sandler-app/src/test.ts",
+            "polyfills": "projects/sandler-app/src/polyfills.ts",
+            "tsConfig": "projects/sandler-app/tsconfig.spec.json",
+            "karmaConfig": "projects/sandler-app/karma.conf.js",
+            "assets": [
+              "projects/sandler-app/src/favicon.ico",
+              "projects/sandler-app/src/assets"
+            ],
+            "styles": [
+              "projects/sandler-app/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/sandler-app/tsconfig.app.json",
+              "projects/sandler-app/tsconfig.spec.json",
+              "projects/sandler-app/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/sandler-app/e2e/protractor.conf.js",
+            "devServerTarget": "sandler-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "sandler-app:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "cli": {
+    "analytics": false
+  },
+  "defaultProject": "sandler-lib"
+}
