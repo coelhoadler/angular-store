@@ -2,15 +2,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { SandlerLibModule } from 'projects/sandler-lib/src/public-api';
+
+import { AppRoutingModule } from './app-routing.module';
+
+import { HttpClientModule } from '@angular/common/http';
+import { SandlerLibModule } from 'sandler-lib';
+import { GithubModule } from './pages/github/github.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
+    AppRoutingModule,
+    HttpClientModule,
     BrowserModule,
-    SandlerLibModule
+    SandlerLibModule,
+    GithubModule
   ],
   providers: [],
   bootstrap: [AppComponent]
