@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { GithubComponent } from './github.component';
 import { githubReducer } from '../../reducers/github.reducer';
 import { StoreModule } from '@ngrx/store';
-import { ERROR_COMPONENT_TYPE } from '@angular/compiler';
+import { EffectsModule } from '@ngrx/effects';
+
+import { GithubEffects } from './../../effects/github.effects';
 
 
 @NgModule({
@@ -12,7 +14,8 @@ import { ERROR_COMPONENT_TYPE } from '@angular/compiler';
   ],
   imports: [
     CommonModule,
-    StoreModule.forFeature('github', githubReducer)
+    StoreModule.forFeature('github', githubReducer),
+    EffectsModule.forFeature([GithubEffects])
   ]
 })
 export class GithubModule { }

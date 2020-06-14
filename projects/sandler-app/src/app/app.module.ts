@@ -8,12 +8,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SandlerLibModule } from 'sandler-lib';
 import { GithubModule } from './pages/github/github.module';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    EffectsModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     BrowserModule,

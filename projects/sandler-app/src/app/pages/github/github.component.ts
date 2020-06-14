@@ -17,8 +17,7 @@ export class GithubComponent implements OnInit {
     private githubService: GithubService,
     private store: Store<any>
   ) { 
-
-    this.githubData$ = this.store.pipe(select('github'));
+    this.githubData$ = this.store.pipe(state => state);
   }
 
   ngOnInit(): void {
@@ -29,6 +28,8 @@ export class GithubComponent implements OnInit {
     this.githubService.getProfile().subscribe(data => {
       this.store.dispatch(store(data));
     });
+
+    this.store.dispatch({type: "[Github profile] store profile"});
   }
 
 }
